@@ -15,7 +15,7 @@ main = do
     simpleOptions
       $(simpleVersion Paths_complex_hsv.version)
       "I really don't know what belongs here."
-      "Graphs a complex function: inputs are 1/s * e^(h*i), outputs are x + y*i, ie, color indicates where a point came from, its position, where it goes."
+      "Graphs a complex function: inputs are x + y*i, outputs are 1/s * e^(h*i), ie, color indicates where a point is going, its position, where it comes from."
       ( Options
           <$> switch
             ( long "verbose"
