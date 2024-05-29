@@ -1,8 +1,9 @@
 {-# LANGUAGE NoImplicitPrelude #-}
-module Types
-  ( App (..)
-  , Options (..)
-  ) where
+
+module Types (
+  App (..),
+  Options (..),
+) where
 
 import RIO
 import RIO.Process
@@ -10,6 +11,7 @@ import RIO.Process
 -- | Command line arguments
 data Options = Options
   { optionsVerbose :: !Bool
+  , optionsInputBounds :: !(Double, Double, Double, Double)
   }
 
 data App = App
@@ -20,6 +22,6 @@ data App = App
   }
 
 instance HasLogFunc App where
-  logFuncL = lens appLogFunc (\x y -> x { appLogFunc = y })
+  logFuncL = lens appLogFunc (\x y -> x{appLogFunc = y})
 instance HasProcessContext App where
-  processContextL = lens appProcessContext (\x y -> x { appProcessContext = y })
+  processContextL = lens appProcessContext (\x y -> x{appProcessContext = y})

@@ -22,6 +22,15 @@ main = do
                 <> short 'v'
                 <> help "Verbose output?"
             )
+          <*> option
+            auto
+            ( long "input-bounds"
+                <> short 'i'
+                <> help "Boundaries for the function inputs"
+                <> showDefault
+                <> value (-10, 10, -10, 10)
+                <> metavar "(MINA,MAXA,MINB,MAXB)"
+            )
       )
       empty
   lo <- logOptionsHandle stderr (optionsVerbose options)
