@@ -1,11 +1,20 @@
 {-# LANGUAGE NoImplicitPrelude #-}
--- | Silly utility module, used to demonstrate how to write a test
--- case.
-module Util
-  ( plus2
-  ) where
 
+-- | Utils for complex-hsv.
+module Util (
+  genInputs,
+) where
+
+import Data.Complex
 import RIO
+import Types
 
-plus2 :: Int -> Int
-plus2 = (+ 2)
+-- | Generates a one-dimensional list of all the inputs from the specified bounds
+genInputs :: Bounds -> Int -> [Complex Double]
+genInputs (mina, maxa, minb, maxb) res =
+  [z | a <- [mina, nexta .. maxa], b <- [minb, nextb .. maxb], let z = a :+ b]
+ where
+  nexta = mina + (maxa - mina) / fromIntegral res
+  nextb = minb + (maxb - minb) / fromIntegral res
+
+

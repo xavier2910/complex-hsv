@@ -18,11 +18,4 @@ run = do
   logInfo $ "Outputs:" <> output
 
 fn :: (RealFloat a) => Complex a -> Complex a
-fn = (** 2)
-
-genInputs :: Bounds -> Int -> [Complex Double]
-genInputs (mina, maxa, minb, maxb) res =
-  [z | a <- [mina, nexta .. maxa], b <- [minb, nextb .. maxb], let z = a :+ b]
- where
-  nexta = mina + (maxa - mina) / fromIntegral res
-  nextb = minb + (maxb - minb) / fromIntegral res
+fn = id
