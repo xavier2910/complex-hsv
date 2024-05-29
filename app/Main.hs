@@ -31,6 +31,15 @@ main = do
                 <> value (-10, 10, -10, 10)
                 <> metavar "(MINA,MAXA,MINB,MAXB)"
             )
+          <*> option
+            auto
+            ( long "graph-resolution"
+                <> short 'r'
+                <> help "Number of points on the final rendered graph in each dimension."
+                <> showDefault
+                <> value 128
+                <> metavar "INT"
+            )
       )
       empty
   lo <- logOptionsHandle stderr (optionsVerbose options)
