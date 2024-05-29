@@ -6,7 +6,9 @@ cabal-version: 2.2
 
 name:           complex-hsv
 version:        0.1.0.0
+synopsis:       Graph complex functions using hsv colors
 description:    Please see the README on Github at <https://github.com/xavier2910/complex-hsv#readme>
+category:       Math
 homepage:       https://github.com/xavier2910/complex-hsv#readme
 bug-reports:    https://github.com/xavier2910/complex-hsv/issues
 author:         Xavier Distelzweig
