@@ -40,6 +40,14 @@ main = do
                 <> value 128
                 <> metavar "INT"
             )
+          <*> strOption
+            ( long "out-file"
+                <> short 'o'
+                <> help "File to write"
+                <> showDefault
+                <> value "./graph.png"
+                <> metavar "PATH"
+            )
       )
       empty
   lo <- logOptionsHandle stderr (optionsVerbose options)

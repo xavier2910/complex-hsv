@@ -14,8 +14,10 @@ run = do
       res = optionsGraphPts opts
       inputs = genInputs graphBounds res
       outputs = map fn inputs
-      output = foldl' (\a b -> a <> "\n" <> b) mempty $ map display outputs
-  logInfo $ "Outputs:" <> output
+      output = complexGraphToImage res outputs
+      outFile = optionsOutFile opts
+  logInfo $ "Completed calculations. Writing output to " <> display outFile
+  writeBinaryFile outFile output
 
 fn :: (RealFloat a) => Complex a -> Complex a
 fn = id

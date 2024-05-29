@@ -9,6 +9,7 @@ module Types (
 
 import Data.Complex
 import RIO
+import RIO.List.Partial
 import RIO.Process
 
 -- | Command line arguments
@@ -16,6 +17,7 @@ data Options = Options
   { optionsVerbose :: !Bool
   , optionsInputBounds :: !Bounds
   , optionsGraphPts :: !Int
+  , optionsOutFile :: !String
   }
 
 data App = App
@@ -34,3 +36,9 @@ instance HasProcessContext App where
 
 instance (Display a) => Display (Complex a) where
   display z = display (realPart z) <> "+" <> display (imagPart z) <> "i"
+instance (Display a) => Display [a] where
+  display [] = "[]"
+  display l = "[" <> firstElem <> elems <> "]"
+   where
+    elems = foldl' (\acc x -> acc <> ", " <> x) mempty . map display $ tail l
+    firstElem = display . head $ l
