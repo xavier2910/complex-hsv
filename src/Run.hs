@@ -20,5 +20,7 @@ run = do
   logInfo $ "Completed calculations. Writing output to " <> display outFile <> "."
   writeBinaryFile outFile output
 
+-- this is the function to graph. Let it be whatever,
+-- so long as it typechecks
 fn :: (RealFloat a) => Complex a -> Complex a
 fn = exp

@@ -1,5 +1,7 @@
 # complex-hsv
 
+![small graph](images/graph17.png)
+
 Graph complex functions using hsv colors.
 
 The idea here is we graph the inputs on a normal plane, and then
@@ -7,14 +9,21 @@ the outputs using hue and saturation (polar: hue = theta, sat = r).
 Perhaps more robust systems exist; I'm not well versed in the study
 of complex functions, but maybe this will be helpful.
 
-Still very much in early stages. A lot of stack template dummy code. Which, helpfully,
-came with instructions:
+## Usage
 
-## Execute
+Currently you need to change the definition of `fn` in `src/Run.hs` to change the graph.
+You can run the program with `stack run -- complex-hsv-exe -v`.
 
-* Run `stack exec -- complex-hsv-exe` to see "We're inside the application!"
-* With `stack exec -- complex-hsv-exe --verbose` you will see the same message, with more logging.
+The program has a few command line options; the most important are `-r RES`, where RES is the number of pixels on the side of the image, `-i (MINA,MAXA,MINB,MAXB)`, which specifies the window size MATLAB-style, and `-o FILENAME.png`, which specifies where to save the graph image. You can see the rest of the options by running `stack run -- complex-hsv-exe --help`.
 
-## Run tests
+## Gallery
 
-`stack test`
+* `f(z) = z`:
+  ![graph](images/graph15.png)
+* `f(z) = z**2`:
+  ![graph](images/graph16.png)
+* `f(z) = e**z`:
+  ![graph](images/graph19.png)
+* `f(z) = ln z`:
+  ![graph](images/graph18.png)
+
