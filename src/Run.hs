@@ -13,9 +13,9 @@ run = do
   let !opts = appOptions app
       !graphBounds = optionsInputBounds opts
       !res = optionsGraphPts opts
-      inputs = genInputs graphBounds res
-      outputs = map (map fn) inputs
-      !output = complexGraphToImage res outputs
+      --      inputs = genInputs graphBounds res
+      --      outputs = graphDataMap fn inputs
+      !output = serializeImage $ graph fn graphBounds res
       !outFile = optionsOutFile opts
   logInfo $ "Completed calculations. Writing output to " <> display outFile <> "."
   writeBinaryFile outFile output
@@ -23,4 +23,4 @@ run = do
 -- this is the function to graph. Let it be whatever,
 -- so long as it typechecks
 fn :: (RealFloat a) => Complex a -> Complex a
-fn = exp
+fn = log

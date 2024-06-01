@@ -24,6 +24,6 @@ The program has a few command line options; the most important are `-r RES`, whe
   ![graph](images/graph16.png)
 * `f(z) = e**z`:
   ![graph](images/graph19.png)
-* `f(z) = ln z`:
+* `f(z) = ln z`. N.B. in the complex world `exp` is non-invertible:
   ![graph](images/graph18.png)
 

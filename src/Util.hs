@@ -1,10 +1,12 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
 -- | Utils for complex-hsv.
 module Util (
-  genInputs,
-  complexGraphToImage,
+  genInput,
+  graph,
+  serializeImage,
   clamp,
   -- exported for testing:
   complexToHsv,
@@ -14,41 +16,44 @@ import Codec.Picture
 import Data.Colour.RGBSpace
 import Data.Colour.RGBSpace.HSV
 import Data.Complex
-import RIO
-import qualified RIO.ByteString.Lazy as L
-import RIO.List.Partial
+import RIO hiding (map)
+import RIO.ByteString.Lazy qualified as L
+import RIO.Vector (enumFromStepN, map)
+import RIO.Vector.Unboxed qualified as VU
+import RIO.Vector.Unboxed.Unsafe qualified as VUS
+import RIO.Vector.Unsafe qualified as VS
 import Types
 
--- | Generates a one-dimensional list of all the inputs from the specified bounds
-genInputs :: Bounds -> Int -> [[Complex Double]]
-genInputs (mina, maxa, minb, maxb) res =
-  [ zs | a <- [mina, nexta .. maxa], let zs = [z | b <- [minb, nextb .. maxb], let z = a :+ b]
-  ]
+genInput :: Bounds -> Int -> Int -> Int -> Complex Double
+genInput (!na, !xa, !nb, !xb) !res !ia !ib = (na + a * da) :+ (nb + b * db)
  where
-  nexta = mina + (maxa - mina) / fromIntegral res
-  nextb = minb + (maxb - minb) / fromIntegral res
+  !da = (xa - na) / fromIntegral res
+  !db = (xb - nb) / fromIntegral res
+  !a = fromIntegral ia
+  !b = fromIntegral ib
 
-complexGraphToImage :: Int -> [[Complex Double]] -> ByteString
-complexGraphToImage !dim outputs =
-  L.toStrict
-    . encodePng
-    . convertRGB8
-    . ImageRGBF
-    $ generateImage getOutput dim dim
+graph :: (Complex Double -> Complex Double) -> Bounds -> Int -> DynamicImage
+graph !fn !bnds !res = ImageRGBF $ generateImage createPixel res res
  where
-  getOutput !a !b = hsvToRgb . complexToHsv $ findOutput a b
-  hsvToRgb (h, s, v) = toPixel $ hsv h s v
-  toPixel (RGB r g b) = PixelRGBF r g b
-  findOutput !a !b = outputs !! a !! b
+  createPixel !a !b = {-# SCC createPixel #-} hsvToRgb . complexToHsv . fn $ genInput bnds res a b
+
+hsvToRgb :: (PixelF, PixelF, PixelF) -> PixelRGBF
+hsvToRgb (!h, !s, !v) = toPixel $ hsv h s v
+
+toPixel :: RGB PixelF -> PixelRGBF
+toPixel (RGB !r !g !b) = PixelRGBF r g b
+
+serializeImage :: DynamicImage -> ByteString
+serializeImage = L.toStrict . encodePng . convertRGB8
 
 complexToHsv :: (RealFloat a) => Complex a -> (Float, Float, Float)
 complexToHsv !z = (realToFrac adjustedPhase, realToFrac . clamp 0 1 $ 1 / magnitude z, 1)
  where
-  adjustedPhase =
+  !adjustedPhase =
     if straightPhase < 0
       then straightPhase + 360
       else straightPhase
-  straightPhase = phase z / pi * 180
+  !straightPhase = phase z / pi * 180
 
 clamp :: (Ord a) => a -> a -> a -> a
 clamp !mn !mx = max mn . min mx
