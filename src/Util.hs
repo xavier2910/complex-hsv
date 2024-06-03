@@ -18,10 +18,6 @@ import Data.Colour.RGBSpace.HSV
 import Data.Complex
 import RIO hiding (map)
 import RIO.ByteString.Lazy qualified as L
-import RIO.Vector (enumFromStepN, map)
-import RIO.Vector.Unboxed qualified as VU
-import RIO.Vector.Unboxed.Unsafe qualified as VUS
-import RIO.Vector.Unsafe qualified as VS
 import Types
 
 genInput :: Bounds -> Int -> Int -> Int -> Complex Double
