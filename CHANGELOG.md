@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to the
 [Haskell Package Versioning Policy](https://pvp.haskell.org/).
 
+## Unreleased
+
+### Features
+
+* added black to render magnitude inside the unit circle.
+* added flags (`-b`, `-w`, and `--no-color`) to allow for fine-grained control of the graphing mode by the user.
+
 ## 0.1.0.0 - 2024-06-03
 
 ### Features

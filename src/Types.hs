@@ -21,6 +21,9 @@ data Options = Options
   , optionsInputBounds :: !Bounds
   , optionsGraphPts :: !Int
   , optionsOutFile :: !String
+  , optionsDontUseColor :: !Bool
+  , optionsDontUseBlack :: !Bool
+  , optionsDontUseWhite :: !Bool
   }
 
 data App = App

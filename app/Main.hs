@@ -48,6 +48,20 @@ main = do
                 <> value "./graph.png"
                 <> metavar "PATH"
             )
+          <*> switch
+            ( long "no-color"
+                <> help "DON'T use hue color to indicate output angle"
+            )
+          <*> switch
+            ( long "no-black"
+                <> short 'b'
+                <> help "DON'T use black to color outputs within the unit circle"
+            )
+          <*> switch
+            ( long "no-white"
+                <> short 'w'
+                <> help "DON'T use white to color outputs beyond the unit circle"
+            )
       )
       empty
   lo <- logOptionsHandle stderr (optionsVerbose options)

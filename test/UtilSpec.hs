@@ -9,9 +9,9 @@ import Test.Hspec.QuickCheck
 spec :: Spec
 spec = do
   describe "complexToHsv" $ do
-    prop "hbounds" $ \z -> let getH (hval, _, _) = hval; h = getH $ complexToHsv (z :: Complex Double) in h <= 360 && h >= 0
-    prop "sbounds" $ \z -> let getS (_, sval, _) = sval; s = getS $ complexToHsv (z :: Complex Double) in s <= 1 && s >= 0
-    prop "realIsRed" $ \a -> let z = abs a :+ 0 in complexToHsv (z :: Complex Double) `shouldBe` (0, realToFrac . clamp 0 1 $ 1 / magnitude z, 1)
+    prop "hbounds" $ \z -> let h = getH (z :: Complex Double) in h <= 360 && h >= 0
+    prop "sbounds" $ \z -> let s = getS (z :: Complex Double) in s <= 1 && s >= 0
+    prop "vbounds" $ \z -> let v = getV (z :: Complex Double) in v <= 1 && v >= 0
 
 {-
 spec :: Spec
