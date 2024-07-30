@@ -27,6 +27,9 @@ graph !f !bnds !res = do
   !clr <- asks (not . optionsDontUseColor . appOptions)
   !blk <- asks (not . optionsDontUseBlack . appOptions)
   !wht <- asks (not . optionsDontUseWhite . appOptions)
+  -- the idea here is to create the function once based on configuration
+  -- and then run it rather than doing a bunch of ifs on the fly.
+  -- There are no bangs b/c it runs faster that way.
   let calcH = if clr then getH else const 240
       calcS = if wht then getS else const 1
       calcV = if blk then getV else const 1
